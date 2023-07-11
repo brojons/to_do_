@@ -11,6 +11,12 @@ from .permissions import IsOwnerPermissions
 class AllCreateToDoView(generics.ListCreateAPIView):
     queryset = ToDoListModel.objects.all()
     serializer_class = ToDoSerializer
+    permission_classes = (permissions.IsAuthenticated,)
+
+class GetToDoByUserView(generics.ListAPIView):
+    def get_queryset(self):
+        return ToDoListModel.objects.filter(user=self.request.user)
+    serializer_class = ToDoSerializer
     permission_classes = (IsOwnerPermissions,)
 
 class DetailUpdateDeleteToDoView(generics.RetrieveUpdateDestroyAPIView):
@@ -18,7 +24,9 @@ class DetailUpdateDeleteToDoView(generics.RetrieveUpdateDestroyAPIView):
     serializer_class = ToDoSerializer
     permission_classes = (IsOwnerPermissions,)
 
-class StatusUpdateView(generics.RetrieveUpdateAPIView):
+# class Get
+
+class StatusUpdateView(APIView):
     def get(self,request,*args,**kwargs):
         task = get_object_or_404(ToDoListModel,pk=kwargs['task_id'])
         if task.status==False:
