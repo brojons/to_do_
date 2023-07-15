@@ -9,6 +9,9 @@ from .permissions import IsOwnerPermissions
 
 # Create your views here.
 class AllCreateToDoView(generics.ListCreateAPIView):
+    """
+        it gets all to do
+    """
     queryset = ToDoListModel.objects.all()
     serializer_class = ToDoSerializer
     permission_classes = (permissions.IsAuthenticated,)
