@@ -27,8 +27,6 @@ class DetailUpdateDeleteToDoView(generics.RetrieveUpdateDestroyAPIView):
     serializer_class = ToDoSerializer
     permission_classes = (IsOwnerPermissions,)
 
-# class Get
-
 class StatusUpdateView(APIView):
     def get(self,request,*args,**kwargs):
         task = get_object_or_404(ToDoListModel,pk=kwargs['task_id'])
