@@ -30,8 +30,7 @@ SECRET_KEY = getenv('SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
-
+ALLOWED_HOSTS = getenv('ALLOWED_HOSTS').split(',')
 
 # Application definition
 
@@ -164,7 +163,7 @@ LANGUAGES = (
     ('ru','russian'),
 )
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'Asia/Tashkent'
 
 USE_I18N = True
 
