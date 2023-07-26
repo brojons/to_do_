@@ -12,7 +12,7 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 
 from pathlib import Path
 from dotenv import load_dotenv
-from os import getenv
+from os import getenv,path
 from datetime import timedelta
 load_dotenv()
 
@@ -28,7 +28,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = getenv('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = getenv('DEBUG')
 
 ALLOWED_HOSTS = getenv('ALLOWED_HOSTS').split(',')
 
@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     'drf_yasg',
     'corsheaders',
     'modeltranslation',
+    'jazzmin',
 
     'django.contrib.admin',
     'django.contrib.auth',
@@ -176,9 +177,10 @@ MODELTRANSLATION_TRANSLATION_REGISTRY = 'config.translation'
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
 
 STATIC_URL = 'static/'
-STATIC_ROOT = BASE_DIR/'static'
+# STATIC_ROOT = BASE_DIR/'static'
 
-MEDIA_ROOT = BASE_DIR/'media'
+MEDIA_URL = '/media/'
+# MEDIA_ROOT = BASE_DIR/'media'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
@@ -189,3 +191,12 @@ SIMPLE_JWT = {
     "ACCESS_TOKEN_LIFETIME": timedelta(hours=5),
     "REFRESH_TOKEN_LIFETIME": timedelta(days=1),
 }
+
+if DEBUG:
+    STATICFILES_DIRS = [
+        BASE_DIR, 'static'
+    ]
+    MEDIA_ROOT = 'media/'
+else:
+    STATIC_ROOT = BASE_DIR, 'static'
+    MEDIA_ROOT = BASE_DIR, 'media'
